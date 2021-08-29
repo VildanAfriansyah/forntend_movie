@@ -1,9 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
 
 :root {
   --primary: salmon;
   --textHover: #FFF;
-  --text: #C4C5C6;
+  --text: #FFF;
 }
 
 
@@ -21,6 +22,7 @@ nav {
   padding: 20px 0px;
   color: var(--text);
   width: 80%;
+  z-index: 10;
 }
 
 nav div:nth-child(1) {
@@ -36,7 +38,7 @@ nav div:nth-child(1) {
 nav ul{
   display: flex;
   list-style: none;
-  width: 10vw;
+  width: 20vw;
   justify-content: space-between;
 }
 
@@ -44,14 +46,12 @@ nav ul li a {
   color: var(--text);
   text-decoration: none;
   font-family: 'Montserrat', sans-serif;
+  font-size: 1.2em;
+  font-weight: bolder;
+  text-transform: uppercase;
 }
 
 nav ul li a:hover {
   color: var(--textHover);
-  font-size: 1.2em;
-}
-
-nav ul li a:hover:after {
-  color: var(--textHover);
-  font-size: 2.2em;
+  font-size: 1.5em;
 }

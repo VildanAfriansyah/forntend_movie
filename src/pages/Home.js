@@ -1,9 +1,31 @@
-import React, { Component } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { connect } from "react-redux";
 
-export default class Home extends Component {
-  render() {
-    return (
-      <div style={{ backgroundColor: "#141414", height: "110vH" }}>home</div>
-    );
-  }
-}
+import Carousel from "../components/Carousel";
+import CardList from "../components/CardList";
+
+const Home = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios("http://localhost:4040/movie/list");
+      setData(result.data);
+    }
+    fetchData();
+  }, []);
+
+  return (
+    <div style={{ backgroundColor: "#141414" }}>
+      <Carousel />
+      <CardList data={data} />
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => {
+  console.log(state);
+};
+
+export default connect(mapStateToProps)(Home);

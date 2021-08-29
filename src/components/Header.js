@@ -3,16 +3,14 @@ import { Link } from "react-router-dom";
 
 import "../assets/css/header.css";
 
-export default function Header() {
+function Header() {
   return (
     <nav className="sticky">
       <div>Logo</div>
       <div>
         <ul>
           <li>
-            <Link to="/my-movie" className="hover-underline-animation">
-              My Movie
-            </Link>
+            <Link to="/my-movie">My Movie</Link>
           </li>
           <li>
             <Link to="#">Profile</Link>
@@ -22,3 +20,5 @@ export default function Header() {
     </nav>
   );
 }
+
+export default Header;

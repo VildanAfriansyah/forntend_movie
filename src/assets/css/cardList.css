@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.card {
+  width: 250px;
+  height: 300px;
+  background-color: #FFF;
+  border-radius: 5px;
+  z-index: 999;
+  cursor: pointer;
+}
+
+.video {
+  width: 250px;
+  height: 150px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.inactive {
+  opacity: 0;
+}
+
+.card:hover {
+  transform:scale(1.2);
+  transform-origin: center;
+  cursor: pointer;
+}
+
+p.tittle {
+  width: 250px;
+  color: #FFF;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  word-break: break-all;
+}
+
+div.tittle {
+  color: #FFF;
+  font-size: 1.2rem;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+a.plot {
+  color: #FFF;
+  width: 100%;
+}
+
+/* icon */
+.icon-play {
+  color: #FFF;
+  font-size: 2.5rem;
+}
+
+.icon-play:hover {
+  transform: scale(1.2);
+}
+
+.icon-star {
+  color: rgb(231, 207, 71);
+  font-size: 2.5rem;
+}

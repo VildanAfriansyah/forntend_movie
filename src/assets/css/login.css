@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.login-active {
+  opacity: 1;
+  display: flex;
+  background-color: rgba(43, 43, 38, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+  z-index: 11;
+  justify-content: center;
+  align-items: center;
+  animation-delay: 2s;
+}
+
+.login-inactive {
+  opacity: 0;
+}
+
+.modal-login {
+  background-color: rgb(221, 221, 221);
+  width: 500px;
+  min-height: 600px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-head {
+  text-align: center;
+  padding: 50px;
+}
+
+.modal-tittle {
+  font-size: 3rem;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.login-google {
+  width: 60%;
+  height: 50px;
+  border-width: 0px;
+  border-radius: 8px;
+  background-color: #FFF;
+  text-transform: uppercase;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.login-facebook{
+  width: 60%;
+  height: 50px;
+  border-width: 0px;
+  border-radius: 8px;
+  background-color: rgb(63, 134, 216);
+  text-transform: uppercase;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.login-google:hover, .login-facebook:hover {
+  transform: scale(1.2);
+}
