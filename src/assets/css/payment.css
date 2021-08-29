@@ -1,0 +1,157 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+
+.payment-active {
+  opacity: 1;
+  display: flex;
+  background-color: rgba(43, 43, 38, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+  z-index: 11;
+  justify-content: center;
+  align-items: center;
+  animation-delay: 2s;
+}
+
+.payment-inactive {
+  opacity: 0;
+}
+
+.modal-payment {
+  background-color: #FFF;
+  width: 500px;
+  min-height: 400px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+.payment-head {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.payment-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.payment-tittle {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2.5rem;
+}
+
+.image-payment {
+  max-width: 100px;
+  max-height: 150px;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.payment-movie-detail {
+  display: flex;
+  flex-direction: column;
+  margin-left: 50px;
+  margin-bottom: 50px;
+}
+
+.tittle-movie {
+  font-size: 2rem;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.genre-movie, .director-movie, .plot-movie {
+  font-size: 1rem;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.payment-method{
+  height: 50px;
+  width: 100%;
+  border-radius: 5px;
+  border-color: "#DBDBDB";
+  font-size: 1.2rem;
+}
+
+.payment-method:active {
+  border-color: #00B730;
+}
+
+:focus{
+  outline: none;
+}
+
+.col-3{
+  float: left; 
+  width: 100%; 
+  margin: 30px auto; 
+  position: relative;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"]{
+  font: 15px/24px "Lato", Arial, sans-serif; 
+  color: #333; 
+  width: 100%; 
+  box-sizing: border-box; 
+  letter-spacing: 1px;
+  -webkit-appearance: none;
+}
+
+.custom-input{
+  border: 0; 
+  padding: 7px 0; 
+  border-bottom: 1px solid #ccc;
+  height: 50px;
+}
+
+.custom-input ~ .focus-border{
+  position: absolute; 
+  bottom: 0; 
+  left: 0; 
+  width: 0; 
+  height: 2px; 
+  background-color: #00B730; 
+  transition: 0.4s;
+}
+
+.custom-input:focus ~ .focus-border{
+  width: 100%; 
+  transition: 0.4s;
+}
+
+.payment-button {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 50px;
+  background-color: #FFF;
+  border-radius: 5px;
+  border-width: 0;
+  background-color: #00B730;
+  font-size: 2rem;
+  color: #FFF;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.payment-button:hover {
+  transform: scale(1.1);
+}
+

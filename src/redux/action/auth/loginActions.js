@@ -16,6 +16,10 @@ export const setToken = (token) => {
   return (dispatch) => dispatch({ type: "SET_TOKEN", token: token });
 };
 
+export const checking = (status) => {
+  return (dispatch) => dispatch({ type: "CHECKING_TOKEN", access: status });
+};
+
 export const loginWithGoogle = () => {
   return (dispatch) => {
     let provider = new firebase.auth.GoogleAuthProvider();
@@ -40,5 +44,21 @@ export const loginWithGoogle = () => {
       .catch(function (error) {
         console.log(error);
       });
+  };
+};
+
+export const tokenChecking = (token) => {
+  return (dispatch) => {
+    axios({
+      method: "post",
+      url: "http://localhost:4040/auth/token",
+      data: {
+        token: token,
+      },
+    })
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => console.log(err));
   };
 };

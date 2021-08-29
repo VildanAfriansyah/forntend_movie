@@ -1,19 +1,26 @@
 import { useState } from "react";
 import { IoIosPlayCircle, IoMdCart, IoMdStar } from "react-icons/io";
+import { connect } from "react-redux";
 
+import { tokenChecking } from "../redux/action/auth/loginActions";
 import Login from "./Login";
+import Payment from "./Payment";
 import "../assets/css/cardList.css";
 
-const CardList = ({ data }) => {
+const CardList = ({ data, token, tokenChecking }) => {
   const [index, setIndex] = useState(null);
-  const [isLogin, setLogin] = useState(false);
+  const [dataMovie, setData] = useState([]);
+  const [isOpen, setOpen] = useState(false);
 
-  const buy = () => {
-    setLogin(true);
+  const buyMovie = (dataMovie) => {
+    setOpen(true);
+    if (dataMovie) {
+      setData(dataMovie);
+    }
   };
 
   const onClose = () => {
-    setLogin(false);
+    setOpen(false);
   };
 
   return (
@@ -55,7 +62,10 @@ const CardList = ({ data }) => {
                     }}
                   >
                     <IoIosPlayCircle className="icon-play" />
-                    <IoMdCart className="icon-play" onClick={buy} />
+                    <IoMdCart
+                      className="icon-play"
+                      onClick={() => buyMovie(movie)}
+                    />
                     <div
                       style={{
                         width: "80px",
@@ -99,13 +109,29 @@ const CardList = ({ data }) => {
         ))}
       </div>
 
-      <ModalLogin isLogin={isLogin} onClose={onClose} />
+      {token ? (
+        <ModalPayment isOpen={isOpen} onClose={onClose} data={dataMovie} />
+      ) : (
+        <ModalLogin isOpen={isOpen} onClose={onClose} />
+      )}
     </>
   );
 };
 
-export default CardList;
+const mapStateToProps = (state) => {
+  return {
+    token: state.auth.login.token,
+  };
+};
 
-const ModalLogin = ({ isLogin, onClose }) => {
-  return <Login isLogin={isLogin} onClose={onClose} />;
+export default connect(mapStateToProps, {
+  tokenChecking,
+})(CardList);
+
+const ModalLogin = ({ isOpen, onClose }) => {
+  return <Login isOpen={isOpen} onClose={onClose} />;
+};
+
+const ModalPayment = ({ isOpen, onClose, data }) => {
+  return <Payment isOpen={isOpen} onClose={onClose} data={data} />;
 };

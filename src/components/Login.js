@@ -2,6 +2,7 @@ import { connect } from "react-redux";
 
 import { loginWithGoogle } from "../redux/action/auth/loginActions";
 import "../assets/css/login.css";
+
 const Login = (props) => {
   const handleOutsideClick = () => {
     props.onClose();
@@ -13,10 +14,15 @@ const Login = (props) => {
 
   return (
     <div
-      className={props.isLogin ? "login-active" : "login-inactive"}
+      className={props.isOpen ? "login-active" : "login-inactive"}
       onClick={handleOutsideClick}
     >
-      <div className="modal-login">
+      <div
+        className="modal-login"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <div className="modal-head">
           <a className="modal-tittle">Login</a>
         </div>
