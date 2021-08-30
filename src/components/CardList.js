@@ -1,16 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { IoIosPlayCircle, IoMdCart, IoMdStar } from "react-icons/io";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
-import { tokenChecking } from "../redux/action/auth/loginActions";
 import Login from "./Login";
 import Payment from "./Payment";
+import Vip from "./Vip";
 import "../assets/css/cardList.css";
 
-const CardList = ({ data, token, tokenChecking }) => {
+const CardList = ({ data, token, type }) => {
   const [index, setIndex] = useState(null);
   const [dataMovie, setData] = useState([]);
   const [isOpen, setOpen] = useState(false);
+  const [isOpenVip, setOpenVip] = useState(false);
+  const [status, setStatus] = useState(false);
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios({
+        method: "post",
+        url: "http://localhost:4040/auth/subscription",
+        data: {
+          token: localStorage.getItem("token"),
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (result.data.status === "success") {
+        setStatus(true);
+      }
+    }
+    fetchData();
+    setInterval(() => {
+      fetchData();
+    }, 1000 * 60 * 60 * 24);
+  }, []);
 
   const buyMovie = (dataMovie) => {
     setOpen(true);
@@ -23,6 +49,30 @@ const CardList = ({ data, token, tokenChecking }) => {
     setOpen(false);
   };
 
+  const onCloseVip = () => {
+    setOpenVip(false);
+  };
+
+  const video = async () => {
+    const result = await axios({
+      method: "post",
+      url: "http://localhost:4040/auth/subscription",
+      data: {
+        token: localStorage.getItem("token"),
+      },
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    if (result.data.status === "success") {
+      history.push("/video");
+    } else {
+      setOpenVip(true);
+    }
+  };
+
+  const history = useHistory();
+
   return (
     <>
       <div
@@ -30,8 +80,9 @@ const CardList = ({ data, token, tokenChecking }) => {
           display: "flex",
           paddingRight: "50px",
           paddingLeft: "50px",
-          marginTop: "-80px",
-          justifyContent: "space-between",
+          marginTop: "-90px",
+          justifyContent:
+            data.length && data.length < 5 ? "left" : "space-between",
           flexWrap: "wrap",
         }}
       >
@@ -61,11 +112,16 @@ const CardList = ({ data, token, tokenChecking }) => {
                       padding: "10px",
                     }}
                   >
-                    <IoIosPlayCircle className="icon-play" />
-                    <IoMdCart
+                    <IoIosPlayCircle
                       className="icon-play"
-                      onClick={() => buyMovie(movie)}
+                      onClick={() => video()}
                     />
+                    {type !== "my-movie" && (
+                      <IoMdCart
+                        className="icon-play"
+                        onClick={() => buyMovie(movie)}
+                      />
+                    )}
                     <div
                       style={{
                         width: "80px",
@@ -102,7 +158,7 @@ const CardList = ({ data, token, tokenChecking }) => {
                 }}
                 onMouseEnter={() => setIndex(idx)}
                 onMouseLeave={() => setIndex(idx)}
-              ></div>
+              />
             )}
             <p className="tittle">{movie.tittle}</p>
           </div>
@@ -110,9 +166,16 @@ const CardList = ({ data, token, tokenChecking }) => {
       </div>
 
       {token ? (
-        <ModalPayment isOpen={isOpen} onClose={onClose} data={dataMovie} />
+        <>
+          <ModalPayment
+            isOpen={isOpen}
+            onClose={() => onClose()}
+            data={dataMovie}
+          />
+          <ModalVip isOpen={isOpenVip} onClose={onCloseVip} />
+        </>
       ) : (
-        <ModalLogin isOpen={isOpen} onClose={onClose} />
+        <ModalLogin isOpen={isOpen} onClose={() => onClose()} />
       )}
     </>
   );
@@ -124,9 +187,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
-  tokenChecking,
-})(CardList);
+export default connect(mapStateToProps)(CardList);
 
 const ModalLogin = ({ isOpen, onClose }) => {
   return <Login isOpen={isOpen} onClose={onClose} />;
@@ -134,4 +195,8 @@ const ModalLogin = ({ isOpen, onClose }) => {
 
 const ModalPayment = ({ isOpen, onClose, data }) => {
   return <Payment isOpen={isOpen} onClose={onClose} data={data} />;
+};
+
+const ModalVip = ({ isOpen, onClose }) => {
+  return <Vip isOpen={isOpen} onClose={onClose} />;
 };

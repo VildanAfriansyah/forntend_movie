@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+
+
+.vip-active {
+  opacity: 1;
+  display: flex;
+  background-color: rgba(43, 43, 38, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+  z-index: 11;
+  justify-content: center;
+  align-items: center;
+  animation-delay: 2s;
+}
+
+.vip-inactive {
+  opacity: 0;
+  position: fixed;
+  z-index: -999;
+}
+
+.modal-vip {
+  background-color: #F6F6F6;
+  width: 80vw;
+  height: 580px;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  padding: 40px;
+}
+
+.vip-head {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 25px;
+}
+
+.vip-tittle {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.vip-subtittle {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #676767
+}
+
+.vip-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.vip-card {
+  width: 20vw;
+  height: 350px;
+  background-color: #FFF;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  cursor: pointer;
+  padding: 20px
+}
+
+.vip-card:hover {
+  border: 2px solid #000000;
+  border-color: #00B730;
+  transform: scale(1.04);
+}
+
+.vip-card-selected {
+  width: 20vw;
+  height: 350px;
+  background-color: #FFF;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  cursor: pointer;
+  border: 2px solid #000000;
+  border-color: #00B730;
+  transform: scale(1.04);
+  padding: 20px
+}
+
+.subsribtion-submit {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.btn-next {
+  width: 50%;
+  height: 50px;
+  background-color: #FFF;
+  border-radius: 5px;
+  border-width: 0;
+  background-color: #00B730;
+  font-size: 2rem;
+  color: #FFF;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn-next:hover {
+  transform: scale(1.1);
+}
+
+.subs-tittle {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.2rem;
+}
+
+.subs-price {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.5rem;
+}
+
+.subs-benefit {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #676767;
+}
+

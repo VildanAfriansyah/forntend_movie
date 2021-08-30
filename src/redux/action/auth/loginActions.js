@@ -39,6 +39,7 @@ export const loginWithGoogle = () => {
             type: "SET_TOKEN",
             token: result.data.token,
           });
+          window.location.reload();
         });
       })
       .catch(function (error) {

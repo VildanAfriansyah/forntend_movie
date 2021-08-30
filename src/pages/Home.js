@@ -24,8 +24,4 @@ const Home = () => {
   );
 };
 
-const mapStateToProps = (state) => {
-  console.log(state);
-};
-
-export default connect(mapStateToProps)(Home);
+export default Home;
