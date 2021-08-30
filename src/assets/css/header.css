@@ -26,7 +26,7 @@ nav {
   z-index: 10;
 }
 nav.child {
-  background: #000;
+  background: #212327;
   width: 100%;
   z-index: 10;
 }
@@ -39,6 +39,15 @@ nav div:nth-child(1) {
   position: fixed;
   top: 0;
   width: 100%;
+  transition: all 2s;
+}
+
+.sticky-active {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #212327;
+  transition: all 2s;
 }
 
 nav ul{

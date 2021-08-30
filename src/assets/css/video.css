@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap');
+
+.video-player {
+  width: 85vw;
+  height: 80vh;
+  display: flex;
+  /* align-items: center; */
+}
+
+.video-container {
+  width: 90vw;
+  display: flex;
+  background-color: #1A1C22 ;
+  flex-direction: column;
+}
+
+.video-tittle {
+  color: #FFF;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2rem;
+}
+
+.video-subtittle {
+  color: rgb(169,169,172);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2rem;
+}
+
+.rate {
+  display: flex;
+  align-items: center;
+}
+
+.rate-tittle{
+  font-size: 2.3rem;
+  font-family: 'Open Sans', sans-serif;
+  color: #FFF
+}
+
+.video-rate {
+  color: #1CC749;
+  font-size: 1.8rem;
+}
+
+.verticalLine {
+  border-right: thick solid #2D2F34;
+  border-left: thick solid #2D2F34;
+  border-width: 1px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 10px;
+}
+
+.horizontalLine {
+  border-bottom: thick solid #2D2F34;
+  border-width: 1px;
+  margin: 10px 50px 20px 50px
+}
+
+.viewers, .genre, .country, .dubbing {
+  color: rgb(169,169,172);
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.2rem;
+}
+
+.rating {
+  color: #1CC749;
+  font-size: 1.2rem;
+  font-family: 'Open Sans', sans-serif;
+  cursor: pointer;
+}
+
+.data-genre, .data-country, .data-dubbing {
+  color: #FFF;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.2rem;
+}
+
+hr {
+  color: #FFF;
+}

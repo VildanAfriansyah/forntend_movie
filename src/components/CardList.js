@@ -13,8 +13,10 @@ const CardList = ({ data, token, type }) => {
   const [index, setIndex] = useState(null);
   const [dataMovie, setData] = useState([]);
   const [isOpen, setOpen] = useState(false);
+  const [isOpenPayment, setOpenPayment] = useState(false);
   const [isOpenVip, setOpenVip] = useState(false);
   const [status, setStatus] = useState(false);
+  const [check, setCheck] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -32,16 +34,31 @@ const CardList = ({ data, token, type }) => {
         setStatus(true);
       }
     }
+
+    async function checkToken() {
+      const result = await axios({
+        method: "post",
+        url: "http://localhost:4040/auth/token",
+        data: {
+          token: localStorage.getItem("token"),
+        },
+      });
+      if (result.data.status === "success") {
+        setCheck(true);
+      }
+    }
     fetchData();
-    setInterval(() => {
-      fetchData();
-    }, 1000 * 60 * 60 * 24);
+    checkToken();
   }, []);
 
   const buyMovie = (dataMovie) => {
-    setOpen(true);
-    if (dataMovie) {
-      setData(dataMovie);
+    if (!check) {
+      setOpen(true);
+    } else {
+      if (dataMovie) {
+        setOpenPayment(true);
+        setData(dataMovie);
+      }
     }
   };
 
@@ -53,21 +70,38 @@ const CardList = ({ data, token, type }) => {
     setOpenVip(false);
   };
 
-  const video = async () => {
-    const result = await axios({
-      method: "post",
-      url: "http://localhost:4040/auth/subscription",
-      data: {
-        token: localStorage.getItem("token"),
-      },
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-    if (result.data.status === "success") {
-      history.push("/video");
-    } else {
+  const onClosePayment = () => {
+    setOpenPayment(false);
+  };
+
+  const video = async (data) => {
+    if (type === "my-movie") {
+      history.push({
+        pathname: "/video",
+        state: { data: data },
+      });
+    }
+    if (!check) {
       setOpenVip(true);
+    } else {
+      const result = await axios({
+        method: "post",
+        url: "http://localhost:4040/auth/subscription",
+        data: {
+          token: localStorage.getItem("token"),
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (result.data.status === "success") {
+        history.push({
+          pathname: "/video",
+          state: { data: data },
+        });
+      } else {
+        setOpenVip(true);
+      }
     }
   };
 
@@ -89,7 +123,11 @@ const CardList = ({ data, token, type }) => {
         {data.map((movie, idx) => (
           <div key={idx}>
             {index === idx ? (
-              <div onMouseLeave={() => setIndex(null)} className="card">
+              <div
+                onMouseLeave={() => setIndex(null)}
+                className="card"
+                onClick={() => video(movie)}
+              >
                 <iframe
                   className="video"
                   frameBorder="0"
@@ -114,13 +152,19 @@ const CardList = ({ data, token, type }) => {
                   >
                     <IoIosPlayCircle
                       className="icon-play"
-                      onClick={() => video()}
+                      onClick={() => video(movie)}
                     />
                     {type !== "my-movie" && (
-                      <IoMdCart
-                        className="icon-play"
-                        onClick={() => buyMovie(movie)}
-                      />
+                      <div
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      >
+                        <IoMdCart
+                          className="icon-play"
+                          onClick={() => buyMovie(movie)}
+                        />
+                      </div>
                     )}
                     <div
                       style={{
@@ -164,19 +208,17 @@ const CardList = ({ data, token, type }) => {
           </div>
         ))}
       </div>
-
-      {token ? (
+      {token && (
         <>
           <ModalPayment
-            isOpen={isOpen}
-            onClose={() => onClose()}
+            isOpen={isOpenPayment}
+            onClose={() => onClosePayment()}
             data={dataMovie}
           />
-          <ModalVip isOpen={isOpenVip} onClose={onCloseVip} />
         </>
-      ) : (
-        <ModalLogin isOpen={isOpen} onClose={() => onClose()} />
       )}
+      <ModalVip isOpen={isOpenVip} onClose={onCloseVip} />
+      <ModalLogin isOpen={isOpen} onClose={() => onClose()} />
     </>
   );
 };
@@ -194,7 +236,7 @@ const ModalLogin = ({ isOpen, onClose }) => {
 };
 
 const ModalPayment = ({ isOpen, onClose, data }) => {
-  return <Payment isOpen={isOpen} onClose={onClose} data={data} />;
+  return <Payment isOpen={isOpen} onClose={onClose} data={data} type="film" />;
 };
 
 const ModalVip = ({ isOpen, onClose }) => {

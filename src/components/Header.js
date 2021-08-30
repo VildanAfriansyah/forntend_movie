@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -12,6 +12,7 @@ function Header() {
   const [check, setCheck] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const [isOpenVip, setOpenVip] = useState(false);
+  const [dimension, setDimension] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -40,9 +41,26 @@ function Header() {
 
   let { id } = useParams();
 
+  useLayoutEffect(() => {
+    function updatePosition() {
+      setDimension(window.pageYOffset);
+    }
+    window.addEventListener("scroll", updatePosition);
+    updatePosition();
+    return () => window.removeEventListener("scroll", updatePosition);
+  }, []);
+
   return (
     <>
-      <nav className={id === "my-movie" ? "child" : "sticky"}>
+      <nav
+        className={
+          id === "my-movie" || id === "video"
+            ? "child"
+            : dimension > 245
+            ? "sticky-active"
+            : "sticky"
+        }
+      >
         <Link
           to={{
             pathname: "/",

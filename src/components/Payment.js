@@ -9,9 +9,11 @@ const Payment = (props) => {
   const [phone, setPhone] = useState(null);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
+    setLoading(true);
     async function fetchData() {
       const result = await axios("http://localhost:4040/payment/list");
       setData(result.data);
+      setLoading(false);
     }
     fetchData();
   }, []);
@@ -20,7 +22,7 @@ const Payment = (props) => {
     props.onClose();
   };
 
-  const payNow = async (id, price) => {
+  const payNow = async () => {
     setLoading(true);
 
     if (props.type === "subscription") {
@@ -54,8 +56,8 @@ const Payment = (props) => {
           phone,
           method_id: method,
           type: "film",
-          movie_id: id,
-          price,
+          movie_id: props.data.movie_id,
+          price: props.data.price,
         },
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -91,47 +93,57 @@ const Payment = (props) => {
               marginBottom: "25px",
             }}
           >
-            {props.type === "subscription" ? (
-              <>
-                {props.id && (
-                  <div style={{ display: "flex", flexDirection: "column" }}>
-                    <a className="tittle-subs">
-                      Standard {props.id.duration} Day Subscription
-                    </a>
-                    <br />
-                    <a className="plot-movie">Price : {props.id.price}</a>
-                  </div>
-                )}
-              </>
+            {loading ? (
+              <div className="lds-dual-ring" />
             ) : (
               <>
-                {props.data && (
+                {props.type === "subscription" ? (
                   <>
-                    <img
-                      src={props.data.poster}
-                      alt="img"
-                      className="image-payment"
-                    />
-                    <div className="payment-movie-detail">
-                      <a className="tittle-movie">
-                        Tittle : {props.data.tittle}
-                      </a>
-                      <a className="genre-movie">Genre : {props.data.genre}</a>
-                      <a className="genre-movie">
-                        Rating : {props.data.rating}
-                      </a>
-                      <a className="director-movie">
-                        Director : {props.data.director}
-                      </a>
-                      <div
-                        style={{
-                          overflowWrap: "break-word",
-                          height: "10px",
-                        }}
-                      >
-                        <a className="plot-movie">Price : {props.data.price}</a>
+                    {props.id && (
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <a className="tittle-subs">
+                          Standard {props.id.duration} Day Subscription
+                        </a>
+                        <br />
+                        <a className="plot-movie">Price : {props.id.price}</a>
                       </div>
-                    </div>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {props.data && (
+                      <>
+                        <img
+                          src={props.data.poster}
+                          alt="img"
+                          className="image-payment"
+                        />
+                        <div className="payment-movie-detail">
+                          <a className="tittle-movie">
+                            Tittle : {props.data.tittle}
+                          </a>
+                          <a className="genre-movie">
+                            Genre : {props.data.genre}
+                          </a>
+                          <a className="genre-movie">
+                            Rating : {props.data.rating}
+                          </a>
+                          <a className="director-movie">
+                            Director : {props.data.director}
+                          </a>
+                          <div
+                            style={{
+                              overflowWrap: "break-word",
+                              height: "10px",
+                            }}
+                          >
+                            <a className="plot-movie">
+                              Price : {props.data.price}
+                            </a>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </>
                 )}
               </>
@@ -156,7 +168,7 @@ const Payment = (props) => {
                   selected
                   style={{ color: "#DBDBDB", fontSize: "1.2rem" }}
                 >
-                  Pilih metode pembayaran
+                  choose payment method
                 </option>
                 {data.map((value, index) => (
                   <option value={value.method_id} key={index}>
@@ -180,13 +192,7 @@ const Payment = (props) => {
                 type="submit"
                 value="Pay Now"
                 className="payment-button"
-                onClick={() =>
-                  payNow(
-                    props.type === "subscription"
-                      ? props.id
-                      : (props.data.movie_id, props.data.price)
-                  )
-                }
+                onClick={() => payNow()}
                 // disabled={loading}
               />
             </div>

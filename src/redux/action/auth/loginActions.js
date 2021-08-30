@@ -33,13 +33,13 @@ export const loginWithGoogle = () => {
             email: result.user.email,
             name: result.user.displayName,
           },
-        }).then((result) => {
-          localStorage.setItem("token", result.data.token);
+        }).then((results) => {
+          localStorage.setItem("token", results.data.token);
+          window.location.reload();
           dispatch({
             type: "SET_TOKEN",
-            token: result.data.token,
+            token: results.data.token,
           });
-          window.location.reload();
         });
       })
       .catch(function (error) {
